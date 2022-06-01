@@ -1,4 +1,5 @@
 require("dotenv").config();
+require("express-async-errors");
 const connectDB = require("./config/db");
 
 const express = require("express");
@@ -15,13 +16,13 @@ app.get("/", (req, res) => {
   res.send(`<h1>Store API</h1><a href="/api/v1/products">Products Route</a>`);
 });
 
+app.use("/api/v1/products", productRoutes);
+
 // Product route
 app.use(notFound);
 app.use(errorHandlerMiddleware);
 
 const PORT = process.env.PORT || 3001;
-
-app.use("/api/v1/products", productRoutes);
 
 const start = async () => {
   try {
